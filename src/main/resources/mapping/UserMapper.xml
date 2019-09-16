@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.buba.wineparty.com.buba.dao.UserMapper">
+	<!-- User denglu(String username, String userpwd); -->
+	<select id="login" resultType="com.buba.wineparty.com.buba.bean.User">
+		select * from sys_user where usercode=#{usercode} and password=#{password}
+	</select>
+
+	<select id="getPlan" resultType="com.buba.wineparty.com.buba.bean.Items">
+	SELECT * FROM items WHERE items.dept_id=#{deptId}
+	</select>
+	<select id="getPlan1" resultType="com.buba.wineparty.com.buba.bean.Plan">
+		SELECT * FROM plan WHERE  `plan`.`dept_id`=#{deptId}
+	</select>
+
+	<select id="getById" resultType="com.buba.wineparty.com.buba.bean.Plan">
+			SELECT * FROM `plan`
+			WHERE id=#{id}
+	</select>
+
+	<select id="gettu" resultType="com.buba.wineparty.com.buba.bean.Items">
+			SELECT `items`.`money`,`sys_area`.`area_name`
+			FROM `sys_area`,`items`
+			WHERE `sys_area`.`parent_id`='1' AND `items`.`area_id`=`sys_area`.`id`
+	</select>
+
+	<select id="getQuyu1" resultType="com.buba.wineparty.com.buba.bean.Dept">
+SELECT d.id,d.dept_name AS `name`,d.area_id AS pid,d.isParent FROM sys_dept d WHERE d.area_id=#{id}
+  	</select>
+
+	<select id="getQuyu" resultType="com.buba.wineparty.com.buba.bean.Area">
+
+  	select a.id,a.area_name as `name`,a.parent_id as pId,a.isParent from sys_area a where a.isParent='true'
+  	</select>
+
+	<insert id="addZtree">
+  		insert into sys_area(area_name,area_code,type1,isParent) values(#{areaName},#{areaCode},#{type1},'true')
+  	</insert>
+
+	<select id="getchakan" resultType="com.buba.wineparty.com.buba.bean.Dept">
+  		SELECT * FROM `sys_dept` WHERE id=#{id}
+  	</select>
+
+	<select id="getchakan1" resultType="com.buba.wineparty.com.buba.bean.Area">
+  		SELECT * FROM sys_area WHERE id=#{id}
+  	</select>
+
+    <insert id="add">
+
+        INSERT INTO `plan`(plan.`name_activities`,plan.`num_activities`,plan.`start_time`,plan.`end_time`,plan.`dept_id`)
+    VALUES(#{nameActivities},#{numActivities},#{startTime},#{endTime},#{deptId})
+    </insert>
+
+	<delete id="delete1" parameterType="com.buba.wineparty.com.buba.bean.Dept" >
+		delete  FROM sys_dept  WHERE id=#{id}
+	</delete>
+	<insert id="additem">
+
+       insert into
+		items(num_actual,new_client,old_client,yx_client,money,createtime,plan_id,dept_id)
+		values(#{numActual},#{newClient},#{oldClient},#{yxClient},#{money},#{createtime},#{planId},#{planId})
+    </insert>
+
+
+
+
+
+
+
+
+</mapper>
